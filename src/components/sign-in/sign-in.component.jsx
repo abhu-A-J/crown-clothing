@@ -7,6 +7,9 @@ import './sign-in.styles.scss';
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
 
+/* Utils */
+import { signInWithGoogle } from '../../firebase/firebase.utils';
+
 const SignIn = () => {
   const [details, setDetails] = useState({
     email: '',
@@ -53,9 +56,16 @@ const SignIn = () => {
           label={'Password'}
         />
 
-        <CustomButton type="submit" onClick={handleSubmit}>
-          Sign in
-        </CustomButton>
+        <div className="buttons">
+          <CustomButton type="submit" onClick={handleSubmit}>
+            Sign in
+          </CustomButton>
+
+          <CustomButton type="button" isGoogleSignIn onClick={signInWithGoogle}>
+            Sign in with google
+          </CustomButton>
+        </div>
+        
       </form>
     </div>
   );
