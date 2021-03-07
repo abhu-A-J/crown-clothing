@@ -11,15 +11,25 @@ import SignInAndSignUpPage from './pages/sign-in-and-sign-up-page/sign-in-and-si
 import Header from './components/header/header.component';
 
 /* Firebase */
-import { auth } from './firebase/firebase.utils';
+import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
-    const unSubscribeFromAuth = auth.onAuthStateChanged((user) => {
-      console.log(user);
-      setCurrentUser(user);
+    const unSubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
+      if (userAuth) {
+        const userRef = await createUserProfileDocument(userAuth);
+        // live updates come back
+        userRef.onSnapshot((snapShot) => {
+          setCurrentUser({
+            id: snapShot.id,
+            ...snapShot.data(),
+          });
+        });
+      } else {
+        setCurrentUser(null);
+      }
     });
 
     return () => {
