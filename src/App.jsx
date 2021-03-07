@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import './App.scss';
 import { Switch, Route } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 /* Pages */
 import HomePage from './pages/homepage/homepage.component';
@@ -13,8 +14,11 @@ import Header from './components/header/header.component';
 /* Firebase */
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 
-function App() {
-  const [currentUser, setCurrentUser] = useState(null);
+/* Actions */
+import { setCurrentUser } from './redux/user/user.actions';
+
+function App(props) {
+  const { setCurrentUser } = props;
 
   useEffect(() => {
     const unSubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
@@ -35,11 +39,11 @@ function App() {
     return () => {
       unSubscribeFromAuth();
     };
-  }, []);
+  }, [setCurrentUser]);
 
   return (
     <>
-      <Header currentUser={currentUser} />
+      <Header />
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route exact path="/shop" component={ShopPage} />
@@ -49,4 +53,10 @@ function App() {
   );
 }
 
-export default App;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setCurrentUser: (user) => dispatch(setCurrentUser(user)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(App);
