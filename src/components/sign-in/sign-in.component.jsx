@@ -8,7 +8,7 @@ import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
 
 /* Utils */
-import { signInWithGoogle } from '../../firebase/firebase.utils';
+import { signInWithGoogle, auth } from '../../firebase/firebase.utils';
 
 const SignIn = () => {
   const [details, setDetails] = useState({
@@ -16,12 +16,18 @@ const SignIn = () => {
     password: '',
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setDetails({
-      email: '',
-      password: '',
-    });
+    const { email, password } = details;
+    try {
+      await auth.signInWithEmailAndPassword(email, password);
+      setDetails({
+        email: '',
+        password: '',
+      });
+    } catch (err) {
+      console.log('Error with sign in with email and password', err);
+    }
   };
 
   const handleChange = (e) => {
@@ -65,7 +71,6 @@ const SignIn = () => {
             Sign in with google
           </CustomButton>
         </div>
-        
       </form>
     </div>
   );
