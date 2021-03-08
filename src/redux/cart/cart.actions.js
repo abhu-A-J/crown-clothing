@@ -14,3 +14,11 @@ export const addItem = (item) => {
     payload: item,
   };
 };
+
+/* Action to remove item from cart */
+export const clearItemFromCart = (item) => {
+  return {
+    type: actionTypes.CLEAR_ITEM_FROM_CART,
+    payload: item,
+  };
+};
