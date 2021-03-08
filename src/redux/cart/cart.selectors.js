@@ -23,3 +23,14 @@ export const selectCartHidden = createSelector(
   selectCart,
   (cart) => cart.hidden
 );
+
+/* Select cart total price */
+export const selectCartTotal = createSelector(selectCartItems, (cartItems) => {
+  if (!cartItems.length) {
+    return 0;
+  }
+
+  return cartItems.reduce((totalPrice, cartItem) => {
+    return totalPrice + cartItem.quantity * cartItem.price;
+  }, 0);
+});
