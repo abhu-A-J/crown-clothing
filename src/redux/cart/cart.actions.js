@@ -6,3 +6,11 @@ export const toggleCartHidden = () => {
     type: actionTypes.TOGGLE_CART_HIDDEN,
   };
 };
+
+/* Action to add item to cart */
+export const addItem = (item) => {
+  return {
+    type: actionTypes.ADD_ITEM,
+    payload: item,
+  };
+};
