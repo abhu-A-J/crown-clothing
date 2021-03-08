@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 
 /* Styling */
 import './cart-icon.styles.scss';
@@ -23,11 +24,9 @@ const CartIcon = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    cartItemsCount: selectCartItemsCount(state),
-  };
-};
+const mapStateToProps = createStructuredSelector({
+  cartItemsCount: selectCartItemsCount,
+});
 
 const mapDispatchToProps = (dispatch) => {
   return {

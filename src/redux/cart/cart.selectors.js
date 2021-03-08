@@ -17,3 +17,9 @@ export const selectCartItemsCount = createSelector(
       return total + item.quantity;
     }, 0)
 );
+
+/* Select the hidden state of cart dropdown */
+export const selectCartHidden = createSelector(
+  selectCart,
+  (cart) => cart.hidden
+);
