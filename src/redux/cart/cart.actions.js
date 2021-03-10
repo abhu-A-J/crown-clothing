@@ -15,6 +15,16 @@ export const addItem = (item) => {
   };
 };
 
+
+/* Action to remove item */
+export const removeItem = (item) => {
+  return {
+    type: actionTypes.REMOVE_ITEM,
+    payload: item,
+  };
+};
+
+
 /* Action to remove item from cart */
 export const clearItemFromCart = (item) => {
   return {
@@ -22,3 +32,4 @@ export const clearItemFromCart = (item) => {
     payload: item,
   };
 };
+

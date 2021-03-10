@@ -1,7 +1,11 @@
 import actionTypes from './cart.types';
 
 /* Utilities */
-import { addItemToCart, clearItemFromCart } from './cart.utils';
+import {
+  addItemToCart,
+  clearItemFromCart,
+  removeItemFromCart,
+} from './cart.utils';
 
 const INITIAL_STATE = {
   hidden: true,
@@ -24,11 +28,18 @@ const cartReducer = (state = INITIAL_STATE, action = {}) => {
       };
     }
 
-    case actionTypes.CLEAR_ITEM_FROM_CART:{
+    case actionTypes.REMOVE_ITEM: {
       return {
         ...state,
-        cartItems:clearItemFromCart(state.cartItems,action.payload)
-      }
+        cartItems: removeItemFromCart(state.cartItems, action.payload),
+      };
+    }
+
+    case actionTypes.CLEAR_ITEM_FROM_CART: {
+      return {
+        ...state,
+        cartItems: clearItemFromCart(state.cartItems, action.payload),
+      };
     }
 
     default: {
