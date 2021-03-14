@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Route } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 /* Styling */
 import './shoppage.styles.scss';
@@ -10,20 +11,24 @@ import CollectionsOverview from '../../components/collections-overview/collectio
 /* Pages */
 import CollectionPage from '../collection/collection.component';
 
+/* Actions */
+import { updateCollections } from '../../redux/shop/shop.actions';
+
 /* Firebase Utils */
 import {
   firestore,
   convertCollectionsSnapshotToMap,
 } from '../../firebase/firebase.utils';
 
-const ShopPage = ({ match }) => {
+const ShopPage = ({ match, updateCollections }) => {
   /* Fetch shop data from firestore */
   useEffect(() => {
     // get collection ref
     const collectionRef = firestore.collection('collections');
 
     collectionRef.onSnapshot(async (snapShot) => {
-      convertCollectionsSnapshotToMap(snapShot);
+      const collectionsMap = convertCollectionsSnapshotToMap(snapShot);
+      updateCollections(collectionsMap);
     });
   }, []);
 
@@ -39,4 +44,11 @@ const ShopPage = ({ match }) => {
   );
 };
 
-export default ShopPage;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateCollections: (collections) =>
+      dispatch(updateCollections(collections)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(ShopPage);
