@@ -1,19 +1,15 @@
 import React from 'react';
 
 /* Styling */
-import './custom-button.styles.scss';
+import { CustomButtonContainer } from './custom-button.styles';
 
 const CustomButton = (props) => {
-  const { children, isGoogleSignIn, inverted, ...otherProps } = props;
+  const { children, ...otherProps } = props;
+
   return (
-    <button
-      className={` ${inverted ? 'inverted' : ''} ${
-        isGoogleSignIn ? 'google-sign-in' : ''
-      } custom-button`}
-      {...otherProps}
-    >
+    <CustomButtonContainer {...otherProps}>
       {children.toUpperCase()}
-    </button>
+    </CustomButtonContainer>
   );
 };
 
