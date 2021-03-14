@@ -7,12 +7,12 @@ import 'firebase/auth';
 import 'firebase/firestore';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyDpx2FebqkgHD0K6xin4LqKg4sd5U92Fsw',
-  authDomain: 'crwn-clothing-e01af.firebaseapp.com',
-  projectId: 'crwn-clothing-e01af',
-  storageBucket: 'crwn-clothing-e01af.appspot.com',
-  messagingSenderId: '1027756363743',
-  appId: '1:1027756363743:web:dd48826827b802740ffe6a',
+  apiKey: 'AIzaSyD0tSkQ8LlBTb2qrkCZY8TyUkYv65GiVww',
+  authDomain: 'crown-clothing-836f8.firebaseapp.com',
+  projectId: 'crown-clothing-836f8',
+  storageBucket: 'crown-clothing-836f8.appspot.com',
+  messagingSenderId: '406616007232',
+  appId: '1:406616007232:web:66b4149fdef97c00b3f5a5',
 };
 
 /* Initialize firebase */
@@ -52,7 +52,7 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
         ...additionalData,
       });
     } catch (err) {
-      console.error('Error Creating user',err);
+      console.error('Error Creating user', err);
     }
   }
 
