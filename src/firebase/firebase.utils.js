@@ -73,7 +73,25 @@ export const addCollectionAndDocuments = async (
     batch.set(newDocRef, obj);
   });
 
-  return await batch.commit()
+  return await batch.commit();
+};
+
+/* Utility to convert snapshots to array maps */
+export const convertCollectionsSnapshotToMap = (collections) => {
+  const transformedCollection = collections.docs.map((doc) => {
+    const { title, items } = doc.data();
+    return {
+      routeName: encodeURI(title.toLowerCase()),
+      id: doc.id,
+      title,
+      items,
+    };
+  });
+
+  return transformedCollection.reduce((acc, collection) => {
+    acc[collection.title.toLowerCase()] = collection;
+    return acc;
+  }, {});
 };
 
 export default firebase;

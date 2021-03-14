@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route } from 'react-router-dom';
 
 /* Styling */
@@ -10,11 +10,31 @@ import CollectionsOverview from '../../components/collections-overview/collectio
 /* Pages */
 import CollectionPage from '../collection/collection.component';
 
+/* Firebase Utils */
+import {
+  firestore,
+  convertCollectionsSnapshotToMap,
+} from '../../firebase/firebase.utils';
+
 const ShopPage = ({ match }) => {
+  /* Fetch shop data from firestore */
+  useEffect(() => {
+    // get collection ref
+    const collectionRef = firestore.collection('collections');
+
+    collectionRef.onSnapshot(async (snapShot) => {
+      convertCollectionsSnapshotToMap(snapShot);
+    });
+  }, []);
+
   return (
     <div className="shop-page">
       <Route exact path={`${match.path}`} component={CollectionsOverview} />
-      <Route exact path={`${match.path}/:collectionID`} component={CollectionPage} />
+      <Route
+        exact
+        path={`${match.path}/:collectionID`}
+        component={CollectionPage}
+      />
     </div>
   );
 };
