@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import './App.scss';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -13,23 +13,11 @@ import CheckoutPage from './pages/checkout/checkout.component';
 /* Components */
 import Header from './components/header/header.component';
 
-
-/* Actions */
-import { setCurrentUser } from './redux/user/user.actions';
-
 /* Selectors */
 import { selectCurrentUser } from './redux/user/user.selectors';
 
 function App(props) {
-  const { setCurrentUser, currentUser } = props;
-
-  useEffect(() => {
-  
-
-    return () => {
-      
-    };
-  }, [setCurrentUser]);
+  const { currentUser } = props;
 
   return (
     <>
@@ -54,10 +42,4 @@ const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
 });
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setCurrentUser: (user) => dispatch(setCurrentUser(user)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps)(App);

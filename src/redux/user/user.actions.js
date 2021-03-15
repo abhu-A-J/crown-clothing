@@ -1,12 +1,5 @@
 import actionTypes from './user.types';
 
-/* Action to set current user */
-export const setCurrentUser = (payload) => {
-  return {
-    type: actionTypes.SET_CURRENT_USER,
-    payload,
-  };
-};
 
 /* Google signin start */
 export const googleSignInStart = () => {
@@ -15,21 +8,6 @@ export const googleSignInStart = () => {
   };
 };
 
-/* Google signin start */
-export const googleSignInSuccess = (user) => {
-  return {
-    type: actionTypes.GOOGLE_SIGN_IN_SUCCESS,
-    payload: user,
-  };
-};
-
-/* Google signin start */
-export const googleSignInFailure = (err) => {
-  return {
-    type: actionTypes.GOOGLE_SIGN_IN_FAILURE,
-    payload: err,
-  };
-};
 
 /* Email signin start */
 export const emailSignInStart = (emailAndPassword) => {
@@ -39,18 +17,20 @@ export const emailSignInStart = (emailAndPassword) => {
   };
 };
 
-/* Email signin start */
-export const emailSignInSuccess = (user) => {
+
+/* When sign in is success */
+export const signInSuccess = (user) => {
   return {
-    type: actionTypes.EMAIL_SIGN_IN_SUCCESS,
+    type: actionTypes.SIGN_IN_SUCCESS,
     payload: user,
   };
 };
 
-/* Email signin start */
-export const emailSignInFailure = (err) => {
+/* When sign in is success */
+export const signInFailure = (err) => {
   return {
-    type: actionTypes.EMAIL_SIGN_IN_FAILURE,
+    type: actionTypes.SIGN_IN_FAILURE,
     payload: err,
   };
 };
+
