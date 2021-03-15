@@ -10,7 +10,7 @@ import createSagaMiddleware  from 'redux-saga';
 import { persistedReducer } from './rootReducer';
 
 /* Root sags */
-import {rootSaga} from './rootSaga';
+import rootSaga from './rootSaga';
 
 const sagaMiddleware=createSagaMiddleware();
 
