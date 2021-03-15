@@ -3,7 +3,11 @@ import { createSelector } from 'reselect';
 /* Select shop from sttate */
 export const selectShop = (state) => state.shop;
 
-
+/* Selector to get fetching State */
+export const selectIsFetchingCollections = createSelector(
+  selectShop,
+  (shop) => shop.selecIsFetchingCollections
+);
 
 /* Select Shop Items */
 export const selectCollections = createSelector(selectShop, (shop) => {
@@ -11,12 +15,14 @@ export const selectCollections = createSelector(selectShop, (shop) => {
 });
 
 /* select collections for preview */
-export const selectCollectionsForPreview=createSelector(
-	selectCollections,
-	(collections)=>{
-		return Object.keys(collections).map((collectionKey)=>collections[collectionKey])
-	}
-)
+export const selectCollectionsForPreview = createSelector(
+  selectCollections,
+  (collections) => {
+    return Object.keys(collections).map(
+      (collectionKey) => collections[collectionKey]
+    );
+  }
+);
 
 /* Selector to select a collection */
 export const selectCollection = (collectionUrlParam) =>

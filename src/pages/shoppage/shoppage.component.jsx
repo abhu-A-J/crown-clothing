@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 
 /* Styling */
 import './shoppage.styles.scss';
@@ -13,34 +14,21 @@ import WithSpinner from '../../components/with-spinner/with-spinner.component';
 import CollectionPage from '../collection/collection.component';
 
 /* Actions */
-import { updateCollections } from '../../redux/shop/shop.actions';
+import { fetchCollectionsStartAsync } from '../../redux/shop/shop.actions';
 
-/* Firebase Utils */
-import {
-  firestore,
-  convertCollectionsSnapshotToMap,
-} from '../../firebase/firebase.utils';
+/* Selectors */
+import { selectIsFetchingCollections } from '../../redux/shop/shop.selectors';
 
 /* HOC's with spinner */
-
 const CollectionOverviewWithSpinner = WithSpinner(CollectionsOverview);
 const CollectionPageWithSpinner = WithSpinner(CollectionPage);
 
-const ShopPage = ({ match, updateCollections }) => {
-  const [isLoading, setIsLoading] = useState(true);
-
+const ShopPage = (props) => {
+  const { match, fetchCollectionsStartAsync, isFetchingCollections } = props;
   /* Fetch shop data from firestore */
   useEffect(() => {
-    // get collection ref
-    const collectionRef = firestore.collection('collections');
-
-    collectionRef.onSnapshot(async (snapShot) => {
-      const collectionsMap = convertCollectionsSnapshotToMap(snapShot);
-      updateCollections(collectionsMap);
-      setIsLoading(false);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    fetchCollectionsStartAsync();
+  }, [fetchCollectionsStartAsync]);
 
   return (
     <div className="shop-page">
@@ -49,7 +37,10 @@ const ShopPage = ({ match, updateCollections }) => {
         path={`${match.path}`}
         render={(props) => {
           return (
-            <CollectionOverviewWithSpinner isLoading={isLoading} {...props} />
+            <CollectionOverviewWithSpinner
+              isLoading={isFetchingCollections}
+              {...props}
+            />
           );
         }}
       />
@@ -57,18 +48,26 @@ const ShopPage = ({ match, updateCollections }) => {
         exact
         path={`${match.path}/:collectionID`}
         render={(props) => {
-          return <CollectionPageWithSpinner isLoading={isLoading} {...props} />;
+          return (
+            <CollectionPageWithSpinner
+              isLoading={isFetchingCollections}
+              {...props}
+            />
+          );
         }}
       />
     </div>
   );
 };
 
+const mapStateToProps = createStructuredSelector({
+  isFetchingCollections: selectIsFetchingCollections,
+});
+
 const mapDispatchToProps = (dispatch) => {
   return {
-    updateCollections: (collections) =>
-      dispatch(updateCollections(collections)),
+    fetchCollectionsStartAsync: () => dispatch(fetchCollectionsStartAsync()),
   };
 };
 
-export default connect(null, mapDispatchToProps)(ShopPage);
+export default connect(mapStateToProps, mapDispatchToProps)(ShopPage);
