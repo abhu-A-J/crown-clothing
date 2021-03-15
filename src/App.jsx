@@ -13,8 +13,6 @@ import CheckoutPage from './pages/checkout/checkout.component';
 /* Components */
 import Header from './components/header/header.component';
 
-/* Firebase */
-import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 
 /* Actions */
 import { setCurrentUser } from './redux/user/user.actions';
@@ -26,23 +24,10 @@ function App(props) {
   const { setCurrentUser, currentUser } = props;
 
   useEffect(() => {
-    const unSubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
-      if (userAuth) {
-        const userRef = await createUserProfileDocument(userAuth);
-        // live updates come back
-        userRef.onSnapshot((snapShot) => {
-          setCurrentUser({
-            id: snapShot.id,
-            ...snapShot.data(),
-          });
-        });
-      } else {
-        setCurrentUser(null);
-      }
-    });
+  
 
     return () => {
-      unSubscribeFromAuth();
+      
     };
   }, [setCurrentUser]);
 
