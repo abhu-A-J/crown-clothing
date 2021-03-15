@@ -14,7 +14,7 @@ import WithSpinner from '../../components/with-spinner/with-spinner.component';
 import CollectionPage from '../collection/collection.component';
 
 /* Actions */
-import { fetchCollectionsStartAsync } from '../../redux/shop/shop.actions';
+import { fetchCollectionsStart } from '../../redux/shop/shop.actions';
 
 /* Selectors */
 import { selectIsFetchingCollections } from '../../redux/shop/shop.selectors';
@@ -24,11 +24,12 @@ const CollectionOverviewWithSpinner = WithSpinner(CollectionsOverview);
 const CollectionPageWithSpinner = WithSpinner(CollectionPage);
 
 const ShopPage = (props) => {
-  const { match, fetchCollectionsStartAsync, isFetchingCollections } = props;
+  const { match, fetchCollectionsStart, isFetchingCollections } = props;
   /* Fetch shop data from firestore */
   useEffect(() => {
-    fetchCollectionsStartAsync();
-  }, [fetchCollectionsStartAsync]);
+    fetchCollectionsStart();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="shop-page">
@@ -66,7 +67,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchCollectionsStartAsync: () => dispatch(fetchCollectionsStartAsync()),
+    fetchCollectionsStart: () => dispatch(fetchCollectionsStart()),
   };
 };
 

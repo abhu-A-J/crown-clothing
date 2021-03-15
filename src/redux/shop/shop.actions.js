@@ -1,10 +1,5 @@
 import actionTypes from './shop.types';
 
-/* Firebase Utils */
-import {
-  convertCollectionsSnapshotToMap,
-  firestore,
-} from '../../firebase/firebase.utils';
 
 /* Action to update isFetching State */
 export const fetchCollectionsStart = () => {
@@ -29,20 +24,4 @@ export const fetchCollectionsFailure = (payload) => {
   };
 };
 
-/* Action to fetch collections */
-export const fetchCollectionsStartAsync = () => {
-  return (dispatch) => {
-    const collectionRef = firestore.collection('collections');
-    dispatch(fetchCollectionsStart());
 
-    collectionRef
-      .get()
-      .then((snapShot) => {
-        const collectionsMap = convertCollectionsSnapshotToMap(snapShot);
-        dispatch(fetchCollectionsSuccess(collectionsMap));
-      })
-      .catch((err) => {
-        dispatch(fetchCollectionsFailure(err.message));
-      });
-  };
-};
