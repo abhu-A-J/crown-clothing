@@ -94,4 +94,14 @@ export const convertCollectionsSnapshotToMap = (collections) => {
   }, {});
 };
 
+/* Utility to check if we have have any current user */
+export const getCurrentUser = () => {
+  return new Promise((resolve, reject) => {
+    const unsubscribe = auth.onAuthStateChanged((userAuth) => {
+      unsubscribe();
+      resolve(userAuth);
+    }, reject);
+  });
+};
+
 export default firebase;

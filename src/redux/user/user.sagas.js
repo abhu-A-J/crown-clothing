@@ -11,6 +11,7 @@ import {
   googleProvider,
   auth,
   createUserProfileDocument,
+  getCurrentUser,
 } from '../../firebase/firebase.utils';
 
 /* Common generator for getting snapshot */
@@ -50,6 +51,20 @@ export function* signInWithEmailAndPassword({ payload }) {
   }
 }
 
+export function* isUserAuthenticated() {
+  try {
+    const userAuth = yield call(getCurrentUser);
+
+    if (!userAuth) {
+      return;
+    }
+    yield call(getSnapShotFromUserAuth, userAuth);
+    
+  } catch (err) {
+    yield put(signInFailure(err));
+  }
+}
+
 /* ****************************** */
 /*  		Main sagas Listeners 			*/
 /* ****************************** */
@@ -64,7 +79,15 @@ export function* onEmailSignInStart() {
   yield takeLatest(actionTypes.EMAIL_SIGN_IN_START, signInWithEmailAndPassword);
 }
 
+export function* onCheckUserSession() {
+  yield takeLatest(actionTypes.CHECK_USER_SESSION, isUserAuthenticated);
+}
+
 /* Exported to root sagas */
 export function* userSaga() {
-  yield all([call(onGoogleSignInStart), call(onEmailSignInStart)]);
+  yield all([
+    call(onGoogleSignInStart),
+    call(onEmailSignInStart),
+    call(onCheckUserSession),
+  ]);
 }

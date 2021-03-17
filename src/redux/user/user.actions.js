@@ -1,13 +1,11 @@
 import actionTypes from './user.types';
 
-
 /* Google signin start */
 export const googleSignInStart = () => {
   return {
     type: actionTypes.GOOGLE_SIGN_IN_START,
   };
 };
-
 
 /* Email signin start */
 export const emailSignInStart = (emailAndPassword) => {
@@ -16,7 +14,6 @@ export const emailSignInStart = (emailAndPassword) => {
     payload: emailAndPassword,
   };
 };
-
 
 /* When sign in is success */
 export const signInSuccess = (user) => {
@@ -34,3 +31,8 @@ export const signInFailure = (err) => {
   };
 };
 
+export const checkUserSession = () => {
+  return {
+    type: actionTypes.CHECK_USER_SESSION,
+  };
+};
