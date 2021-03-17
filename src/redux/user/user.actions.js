@@ -31,8 +31,31 @@ export const signInFailure = (err) => {
   };
 };
 
+/* Action to check if user is signed in or not */
 export const checkUserSession = () => {
   return {
     type: actionTypes.CHECK_USER_SESSION,
+  };
+};
+
+/* When signout start */
+export const signOutStart = () => {
+  return {
+    type: actionTypes.SIGN_OUT_START,
+  };
+};
+
+/* When signout success */
+export const signOutSuccess = () => {
+  return {
+    type: actionTypes.SIGN_OUT_SUCCESS,
+  };
+};
+
+/* When signout fails */
+export const signOutFailure = (err) => {
+  return {
+    type: actionTypes.SIGN_OUT_FAILURE,
+    payload: err,
   };
 };
