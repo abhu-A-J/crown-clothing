@@ -10,9 +10,8 @@ import CollectionItem from '../../components/collection-item/collection-item.com
 /* Selectors */
 import { selectCollection } from '../../redux/shop/shop.selectors';
 
-
 const CollectionPage = ({ collection }) => {
-  const { title, items } = collection;
+  const { title, items } = collection || { title: '', items: [] };
 
   return (
     <div className="collection-page">
