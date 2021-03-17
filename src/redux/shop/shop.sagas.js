@@ -1,4 +1,4 @@
-import { takeLatest, call, put } from 'redux-saga/effects';
+import { takeLatest, call, put, all } from 'redux-saga/effects';
 
 import actionTypes from './shop.types';
 
@@ -35,9 +35,11 @@ export function* fetchCollectionsAsync() {
   }
 }
 
-/* Main saga which will stop execution when actionTypes is matched 
-		and will call the corresponding generator function 
-*/
+/* Saga Listenerss */
 export function* fetchCollectionsStart() {
   yield takeLatest(actionTypes.FETCH_COLLECTIONS_START, fetchCollectionsAsync);
+}
+
+export function* shopSagas() {
+  yield all([call(fetchCollectionsStart)]);
 }
