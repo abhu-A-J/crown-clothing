@@ -4,11 +4,8 @@ import { BrowserRouter } from 'react-router-dom';
 import { PersistGate } from 'redux-persist/integration/react';
 import { Provider } from 'react-redux';
 
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider,
-} from '@apollo/client';
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import {resolvers,typeDefs} from './graphql/resolvers'
 
 import './index.scss';
 import App from './App';
@@ -21,8 +18,15 @@ import store, { persistor } from './redux/store';
 const client = new ApolloClient({
   uri: 'https://crwn-clothing.com',
   cache: new InMemoryCache(),
+  resolvers,
+  typeDefs
 });
 
+client.writeData({
+  data: {
+    cartHidden: true,
+  },
+});
 
 ReactDOM.render(
   <React.StrictMode>
