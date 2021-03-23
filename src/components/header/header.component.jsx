@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 
+import { gql, useQuery } from '@apollo/client';
+
 /* Styling */
 import './header.styles.scss';
 
@@ -16,11 +18,21 @@ import CartIcon from '../cart-icon/cart-icon.component';
 import CartDropdown from '../cart-dropdown/cart-dropdown.component';
 
 /* Selectors */
-import { selectCartHidden } from '../../redux/cart/cart.selectors';
 import { selectCurrentUser } from '../../redux/user/user.selectors';
 
+const GET_CART_HIDDEN = gql`
+  {
+    cartHidden @client
+  }
+`;
+
 const Header = (props) => {
-  const { currentUser, hidden } = props;
+  const { currentUser } = props;
+
+  const { data } = useQuery(GET_CART_HIDDEN);
+
+  const { cartHidden: hidden } = data;
+
   return (
     <div className="header">
       <Link to="/" className="link-container">
@@ -51,6 +63,5 @@ const Header = (props) => {
 
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
-  hidden: selectCartHidden,
 });
 export default connect(mapStateToProps)(Header);
