@@ -22,7 +22,7 @@ const client = new ApolloClient({
   typeDefs,
 });
 
-client.writeData({
+client.writeQuery({
   data: {
     cartHidden: true,
     cartItems: [],
