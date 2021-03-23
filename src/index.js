@@ -13,7 +13,6 @@ import App from './App';
 /* Store */
 import store, { persistor } from './redux/store';
 
-
 /* Apollo Client config */
 
 const client = new ApolloClient({
@@ -23,12 +22,12 @@ const client = new ApolloClient({
   typeDefs,
 });
 
-// client.writeData({
-//   data: {
-//     cartHidden: true,
-//   },
-// });
-
+client.writeData({
+  data: {
+    cartHidden: true,
+    cartItems: [],
+  },
+});
 
 ReactDOM.render(
   <React.StrictMode>
