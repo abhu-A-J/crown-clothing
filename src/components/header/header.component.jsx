@@ -31,7 +31,7 @@ const Header = (props) => {
 
   const { data } = useQuery(GET_CART_HIDDEN);
 
-  const { cartHidden: hidden } = data;
+  const { toggleCartHidden: hidden } = data;
 
   return (
     <div className="header">

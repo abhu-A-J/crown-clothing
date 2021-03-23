@@ -5,7 +5,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { Provider } from 'react-redux';
 
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
-import {resolvers,typeDefs} from './graphql/resolvers'
+import { resolvers, typeDefs } from './graphql/resolvers';
 
 import './index.scss';
 import App from './App';
@@ -13,20 +13,22 @@ import App from './App';
 /* Store */
 import store, { persistor } from './redux/store';
 
+
 /* Apollo Client config */
 
 const client = new ApolloClient({
   uri: 'https://crwn-clothing.com',
   cache: new InMemoryCache(),
   resolvers,
-  typeDefs
+  typeDefs,
 });
 
-client.writeData({
-  data: {
-    cartHidden: true,
-  },
-});
+// client.writeData({
+//   data: {
+//     cartHidden: true,
+//   },
+// });
+
 
 ReactDOM.render(
   <React.StrictMode>
